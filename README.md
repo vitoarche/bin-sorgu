@@ -1,6 +1,6 @@
 # BIN Sorgu
 
-Kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı gösteren sunucusuz, statik site. Vanilla HTML/CSS/JS; arayüz Türkçe.
+Kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı gösteren sunucusuz, statik site. Vanilla HTML/CSS/JS; arayüz 7 dilde (tr, en, de, fr, ar, zh, ko; çeviriler `js/i18n.js`). Dil tarayıcı dilinden seçilir (yedek: İngilizce), `?lang=xx` ile veya sayfadaki seçiciyle değiştirilir; seçim hiçbir yerde saklanmaz.
 
 ## Veri doğrulaması (bin-list-data.csv, indirilen dosya 27.607.253 bayt)
 
