@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="no-referrer">
+<title>BIN Sorgu – kartın ilk 6-8 hanesi</title>
+<meta name="description" content="Kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı öğrenin. Sunucusuz statik site; girdiğiniz rakamlar kaydedilmez.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>BIN Sorgu</h1>
+  <p class="lead">Kartın ilk 6-8 hanesinden ülke, banka, tür ve markayı öğrenin.</p>
+
+  <p class="warn" role="note"><strong>Tam kart numarası, son kullanma tarihi veya CVV girmeyin.</strong> Yalnızca ilk 6-8 hane gerekir.</p>
+
+  <form id="f" autocomplete="off" novalidate>
+    <label for="q">Kartın ilk 6-8 hanesi</label>
+    <input id="q" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8"
+           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+           placeholder="örn. 411111" aria-describedby="hint notice">
+    <p id="hint" class="hint">Yalnızca rakam; en fazla 8 hane.</p>
+    <p id="notice" class="notice" role="alert" hidden></p>
+  </form>
+
+  <section id="result" aria-live="polite" aria-atomic="true" class="result"></section>
+</main>
+
+<footer>
+  <p>Veri: <a href="https://github.com/venelinkochev/bin-list-data" rel="noopener noreferrer">venelinkochev/bin-list-data</a>, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer">CC-BY-4.0</a>. Resmi IIN kaydı değildir, hata olabilir.</p>
+  <p>Girdiğiniz rakamlar kaydedilmez ve üçüncü tarafa gönderilmez. Yalnızca ilk 3 hane, veri dosyasını almak için bu siteyi sunan sunucuya gider.</p>
+</footer>
+<div class="author" aria-hidden="true">author : arche</div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
