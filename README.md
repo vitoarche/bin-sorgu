@@ -20,7 +20,7 @@ Shard'lar BIN'in ilk 3 hanesine göre bölünür (`data/411.json` vb.; 770 dosya
 
 ## Gizlilik
 
-Giriş en fazla 8 haneye kırpılır; 9+ hane yapıştırılırsa uyarı gösterilir. localStorage, çerez, analitik veya üçüncü taraf isteği yoktur; yalnızca aynı kaynaktaki `data/*.json` dosyaları çekilir.
+Giriş en fazla 8 haneye kırpılır; 9+ hane yapıştırılırsa uyarı gösterilir. localStorage, çerez, analitik veya üçüncü taraf isteği yoktur; yalnızca aynı kaynaktaki `data/*.json` dosyaları çekilir. Not: girdiğiniz rakamlar kaydedilmez ve üçüncü tarafa gönderilmez, ancak ilk 3 hane (`data/XXX.json` isteği) siteyi sunan sunucuya gider ve o sunucunun erişim loguna düşebilir. Eşleştirme tarayıcıda yapılır; 4-8. haneler hiçbir yere gitmez.
 
 ## Atıf
 
