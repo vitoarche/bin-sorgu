@@ -7,8 +7,8 @@ export const LANG_NAMES = { tr: 'Türkçe', en: 'English', de: 'Deutsch', fr: 'F
 export const LANG_TAGS = { tr: 'tr', en: 'en', de: 'de', fr: 'fr', ar: 'ar', zh: 'zh-Hans', ko: 'ko' };
 
 const en = {
-  title: 'BIN Lookup – the first 6-8 digits of a card',
-  metaDesc: 'Find the country, bank, card type and brand from the first 6-8 digits (BIN) of a card. Static site without a server-side app; the digits you enter are not stored.',
+  title: 'BIN Query – the first 6-8 digits of a card',
+  metaDesc: 'BIN Query: Find the country, bank, card type and brand from the first 6-8 digits (BIN) of a card. Static site without a server-side app; the digits you enter are not stored.',
   h1: 'BIN Lookup',
   lead: 'Find the country, bank, type and brand from the first 6-8 digits of a card.',
   warnStrong: 'Do not enter a full card number, expiry date or CVV.',
@@ -39,8 +39,8 @@ const en = {
 };
 
 const tr = {
-  title: 'BIN Sorgu – kartın ilk 6-8 hanesi',
-  metaDesc: 'Kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı öğrenin. Sunucusuz statik site; girdiğiniz rakamlar kaydedilmez.',
+  title: 'BIN Query – kartın ilk 6-8 hanesi',
+  metaDesc: 'BIN Query: Kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı öğrenin. Sunucusuz statik site; girdiğiniz rakamlar kaydedilmez.',
   h1: 'BIN Sorgu',
   lead: 'Kartın ilk 6-8 hanesinden ülke, banka, tür ve markayı öğrenin.',
   warnStrong: 'Tam kart numarası, son kullanma tarihi veya CVV girmeyin.',
@@ -71,8 +71,8 @@ const tr = {
 };
 
 const de = {
-  title: 'BIN-Abfrage – die ersten 6-8 Ziffern einer Karte',
-  metaDesc: 'Finden Sie Land, Bank, Kartentyp und Marke anhand der ersten 6-8 Ziffern (BIN) einer Karte. Statische Website ohne Server-Anwendung; eingegebene Ziffern werden nicht gespeichert.',
+  title: 'BIN Query – die ersten 6-8 Ziffern einer Karte',
+  metaDesc: 'BIN Query: Finden Sie Land, Bank, Kartentyp und Marke anhand der ersten 6-8 Ziffern (BIN) einer Karte. Statische Website ohne Server-Anwendung; eingegebene Ziffern werden nicht gespeichert.',
   h1: 'BIN-Abfrage',
   lead: 'Finden Sie Land, Bank, Typ und Marke anhand der ersten 6-8 Ziffern einer Karte.',
   warnStrong: 'Geben Sie keine vollständige Kartennummer, kein Ablaufdatum und keinen CVV ein.',
@@ -103,8 +103,8 @@ const de = {
 };
 
 const fr = {
-  title: 'Recherche BIN – les 6 à 8 premiers chiffres d’une carte',
-  metaDesc: 'Trouvez le pays, la banque, le type de carte et la marque à partir des 6 à 8 premiers chiffres (BIN) d’une carte. Site statique sans application serveur ; les chiffres saisis ne sont pas enregistrés.',
+  title: 'BIN Query – les 6 à 8 premiers chiffres d’une carte',
+  metaDesc: 'BIN Query : Trouvez le pays, la banque, le type de carte et la marque à partir des 6 à 8 premiers chiffres (BIN) d’une carte. Site statique sans application serveur ; les chiffres saisis ne sont pas enregistrés.',
   h1: 'Recherche BIN',
   lead: 'Trouvez le pays, la banque, le type et la marque à partir des 6 à 8 premiers chiffres d’une carte.',
   warnStrong: 'Ne saisissez pas le numéro complet de la carte, la date d’expiration ni le CVV.',
@@ -135,8 +135,8 @@ const fr = {
 };
 
 const ar = {
-  title: 'استعلام BIN – أول 6 إلى 8 أرقام من البطاقة',
-  metaDesc: 'اعرف البلد والبنك ونوع البطاقة والعلامة التجارية من أول 6 إلى 8 أرقام (BIN) من البطاقة. موقع ثابت بلا تطبيق خادم؛ الأرقام التي تدخلها لا تُحفظ.',
+  title: 'BIN Query – أول 6 إلى 8 أرقام من البطاقة',
+  metaDesc: 'BIN Query: اعرف البلد والبنك ونوع البطاقة والعلامة التجارية من أول 6 إلى 8 أرقام (BIN) من البطاقة. موقع ثابت بلا تطبيق خادم؛ الأرقام التي تدخلها لا تُحفظ.',
   h1: 'استعلام BIN',
   lead: 'اعرف البلد والبنك والنوع والعلامة التجارية من أول 6 إلى 8 أرقام من البطاقة.',
   warnStrong: 'لا تُدخل رقم البطاقة الكامل ولا تاريخ الانتهاء ولا رمز CVV.',
@@ -167,8 +167,8 @@ const ar = {
 };
 
 const zh = {
-  title: 'BIN 查询 – 银行卡前 6-8 位',
-  metaDesc: '通过银行卡前 6-8 位数字（BIN）查询发卡国家、银行、卡类型和品牌。这是没有服务器端应用的静态网站；您输入的数字不会被保存。',
+  title: 'BIN Query – 银行卡前 6-8 位',
+  metaDesc: 'BIN Query：通过银行卡前 6-8 位数字（BIN）查询发卡国家、银行、卡类型和品牌。这是没有服务器端应用的静态网站；您输入的数字不会被保存。',
   h1: 'BIN 查询',
   lead: '通过银行卡前 6-8 位数字查询国家、银行、类型和品牌。',
   warnStrong: '请勿输入完整卡号、有效期或 CVV。',
@@ -199,8 +199,8 @@ const zh = {
 };
 
 const ko = {
-  title: 'BIN 조회 – 카드 앞 6-8자리',
-  metaDesc: '카드 앞 6-8자리(BIN)로 국가, 은행, 카드 종류, 브랜드를 확인하세요. 서버 측 앱이 없는 정적 사이트이며, 입력한 숫자는 저장되지 않습니다.',
+  title: 'BIN Query – 카드 앞 6-8자리',
+  metaDesc: 'BIN Query: 카드 앞 6-8자리(BIN)로 국가, 은행, 카드 종류, 브랜드를 확인하세요. 서버 측 앱이 없는 정적 사이트이며, 입력한 숫자는 저장되지 않습니다.',
   h1: 'BIN 조회',
   lead: '카드 앞 6-8자리로 국가, 은행, 종류, 브랜드를 확인하세요.',
   warnStrong: '전체 카드 번호, 유효기간, CVV는 입력하지 마세요.',
