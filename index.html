@@ -5,19 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta name="referrer" content="no-referrer">
-<title>BIN Sorgu – kartın ilk 6-8 hanesi</title>
-<meta name="description" content="Kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı öğrenin. Sunucusuz statik site; girdiğiniz rakamlar kaydedilmez.">
+<title>BIN Query – kartın ilk 6-8 hanesi</title>
+<meta name="description" content="BIN Query: kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı öğrenin. Sunucusuz statik site; girdiğiniz rakamlar kaydedilmez.">
+<meta name="theme-color" content="#4338ca">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BIN Query">
+<meta property="og:title" content="BIN Query – kartın ilk 6-8 hanesi">
+<meta property="og:description" content="BIN Query: kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı öğrenin. Sunucusuz statik site; girdiğiniz rakamlar kaydedilmez.">
+<meta property="og:url" content="https://vitoarche.github.io/bin-sorgu/">
+<meta property="og:image" content="https://vitoarche.github.io/bin-sorgu/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BIN Query logosu: içinde altı vurgulu nokta olan bir mercek ve kart biçimli sap">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BIN Query – kartın ilk 6-8 hanesi">
+<meta name="twitter:description" content="BIN Query: kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı öğrenin. Sunucusuz statik site; girdiğiniz rakamlar kaydedilmez.">
+<meta name="twitter:image" content="https://vitoarche.github.io/bin-sorgu/assets/og.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
+<header class="top">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="bq-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a5cff"/><stop offset=".52" stop-color="#4338ca"/><stop offset="1" stop-color="#0e9f95"/></linearGradient>
+        <radialGradient id="bq-h" cx=".2" cy=".08" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="64" height="64" rx="15" fill="url(#bq-g)"/>
+      <rect width="64" height="64" rx="15" fill="url(#bq-h)"/>
+      <g class="lens">
+        <circle cx="27" cy="27" r="10.75" fill="#1b0f5c" opacity=".22"/>
+        <path d="M19.2 23.4a8.8 8.8 0 0 1 5.4-5.3" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".45"/>
+        <g fill="#fff" opacity=".75"><circle cx="21.9" cy="21.8" r="1.2"/><circle cx="25.3" cy="21.8" r="1.2"/><circle cx="28.7" cy="21.8" r="1.2"/><circle cx="32.1" cy="21.8" r="1.2"/><circle cx="21.9" cy="32.2" r="1.2"/><circle cx="25.3" cy="32.2" r="1.2"/><circle cx="28.7" cy="32.2" r="1.2"/><circle cx="32.1" cy="32.2" r="1.2"/></g>
+        <g class="bin" fill="#8ff5e2"><circle style="--i:0" cx="18.5" cy="27" r="1.55"/><circle style="--i:1" cx="21.9" cy="27" r="1.55"/><circle style="--i:2" cx="25.3" cy="27" r="1.55"/><circle style="--i:3" cx="28.7" cy="27" r="1.55"/><circle style="--i:4" cx="32.1" cy="27" r="1.55"/><circle style="--i:5" cx="35.5" cy="27" r="1.55"/></g>
+        <circle cx="27" cy="27" r="13.5" fill="none" stroke="#fff" stroke-width="5.5"/>
+      </g>
+      <path class="tail" fill="#fff" fill-rule="evenodd" transform="translate(45.2 45.2) rotate(45)" d="M-6.1-5.75H6.1A2.4 2.4 0 0 1 8.5-3.35V3.35A2.4 2.4 0 0 1 6.1 5.75H-6.1A2.4 2.4 0 0 1-8.5 3.35V-3.35A2.4 2.4 0 0 1-6.1-5.75ZM-8.5-3.2V-.8H8.5V-3.2Z"/>
+    </svg>
+    <div class="brand-text">
+      <h1 class="wordmark" dir="ltr"><span class="w-bin">BIN</span> <span class="w-query">Query</span></h1>
+      <p class="sig" dir="ltr">arche</p>
+    </div>
+  </div>
   <!-- JS kapalıyken seçici gizli kalır; statik metin Türkçedir. -->
   <div class="lang" id="langbox" hidden>
     <label for="lang" data-i18n="langLabel">Dil</label>
     <select id="lang"></select>
   </div>
-
-  <h1 data-i18n="h1">BIN Sorgu</h1>
+</header>
+<main>
   <p class="lead" data-i18n="lead">Kartın ilk 6-8 hanesinden ülke, banka, tür ve markayı öğrenin.</p>
 
   <p class="warn" role="note"><strong data-i18n="warnStrong">Tam kart numarası, son kullanma tarihi veya CVV girmeyin.</strong> <span data-i18n="warnRest">Yalnızca ilk 6-8 hane gerekir.</span></p>

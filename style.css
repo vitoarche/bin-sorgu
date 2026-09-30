@@ -1,11 +1,13 @@
 :root {
   --bg: #f6f7f9; --fg: #15181d; --muted: #566070; --card: #fff; --line: #c5ccd6;
   --accent: #0b5fd8; --warn-bg: #fff4d6; --warn-fg: #5c3d00; --err: #a4161a;
+  --brand-a: #5a3be6; --brand-b: #0a7a73;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0f1216; --fg: #e8ebf0; --muted: #a2acba; --card: #181d24; --line: #3a4350;
     --accent: #6ea8ff; --warn-bg: #3a2f10; --warn-fg: #ffe3a1; --err: #ff9b9e;
+    --brand-a: #b6a4ff; --brand-b: #5fe0cc;
   }
 }
 * { box-sizing: border-box; }
@@ -14,7 +16,7 @@ body {
   background: var(--bg); color: var(--fg);
   font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-main { flex: 1; width: 100%; max-width: 34rem; margin: 0 auto; padding: 1.25rem 1rem; }
+main { flex: 1; width: 100%; max-width: 34rem; margin: 0 auto; padding: 1rem 1rem 1.25rem; }
 h1 { margin: .5rem 0 .25rem; font-size: 1.75rem; }
 .lead { margin: 0 0 1rem; color: var(--muted); }
 .warn { background: var(--warn-bg); color: var(--warn-fg); padding: .75rem 1rem; border-radius: .5rem; margin: 0 0 1.25rem; }
@@ -41,7 +43,7 @@ dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
 footer { padding: 1rem 1rem 2.25rem; font-size: .85rem; color: var(--muted); text-align: center; }
 footer p { margin: .2rem 0; }
 a { color: var(--accent); }
-.lang { display: flex; align-items: center; justify-content: flex-end; gap: .5rem; max-width: 100%; }
+.lang { display: flex; align-items: center; justify-content: flex-end; gap: .5rem; max-width: 100%; margin-inline-start: auto; }
 .lang label { display: inline; margin: 0; font-weight: 600; font-size: .9rem; }
 .lang select {
   font: inherit; font-size: .95rem; padding: .3rem .5rem; max-width: 60%;
@@ -50,3 +52,51 @@ a { color: var(--accent); }
 .lang select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .warn, .lead, .hint, .notice, .card, footer { overflow-wrap: anywhere; }
 :lang(ko) p, :lang(ko) dd, :lang(ko) dt { word-break: keep-all; }
+
+/* Marka başlığı: sol üst = mantıksal başlangıç (RTL'de sağ). */
+.top {
+  width: 100%; max-width: 34rem; margin: 0 auto; padding: 1.25rem 1rem 0;
+  display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1rem;
+}
+.brand { display: flex; align-items: center; gap: .7rem; min-width: 0; }
+.mark {
+  flex: none; width: 2.75rem; height: 2.75rem; border-radius: .7rem;
+  box-shadow: 0 .4rem 1rem -.4rem rgb(67 56 202 / .6);
+}
+.brand-text { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.top .lang select { max-width: 12rem; }
+@media (max-width: 420px) {
+  .top { gap: .75rem; }
+  .brand { gap: .6rem; }
+  .mark { width: 2.5rem; height: 2.5rem; border-radius: .64rem; }
+  .wordmark { font-size: 1.4rem; }
+}
+.wordmark { margin: 0; font-size: 1.6rem; line-height: 1.05; font-weight: 800; letter-spacing: -.025em; white-space: nowrap; }
+.w-bin { color: var(--fg); }
+.w-query { font-weight: 600; color: var(--brand-a); }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .w-query {
+    background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+}
+.sig {
+  margin: .25rem 0 0; font: 500 .75rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  letter-spacing: .24em; color: var(--muted);
+}
+.sig::before {
+  content: ""; display: inline-block; width: .9rem; height: 1px; margin-inline-end: .45rem;
+  vertical-align: middle; background: currentColor;
+}
+.mark .tail { transform: translate(45.2px, 45.2px) rotate(45deg); }
+.mark .bin circle { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .mark .lens, .mark .tail { transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
+  .brand:hover .mark .lens { transform: translate(-1px, -1px); }
+  .brand:hover .mark .tail { transform: translate(46.6px, 46.6px) rotate(45deg); }
+  .mark .bin circle { animation: bq-scan .5s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.25s + var(--i) * 80ms); }
+  .wordmark, .sig { animation: bq-rise .6s cubic-bezier(.2, .8, .2, 1) both; }
+  .sig { animation-delay: .12s; }
+}
+@keyframes bq-scan { from { opacity: 0; transform: scale(.2); } 60% { opacity: 1; transform: scale(1.35); } to { opacity: 1; transform: none; } }
+@keyframes bq-rise { from { opacity: 0; transform: translateY(.3rem); } to { opacity: 1; transform: none; } }
