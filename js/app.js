@@ -1,12 +1,18 @@
-import { normalize, shardKey, lookup, flagEmoji, typeLabel, MIN_LEN } from './match.js';
+import { normalize, shardKey, lookup, flagEmoji, MIN_LEN } from './match.js';
 import { makeLatest } from './guard.js';
+import { SUPPORTED, LANG_NAMES, LANG_TAGS, t, dirOf, detectLang, typeLabel } from './i18n.js';
 
 const q = document.getElementById('q');
 const notice = document.getElementById('notice');
 const out = document.getElementById('result');
 const cache = new Map(); // yalnızca bellekte; diske yazılmaz
 let countryNames = null;
-const latest = makeLatest();
+let lang = 'en';
+// Ekranın son durumu; dil değişince yeniden çizmek için (yalnızca bellekte).
+let state = { kind: 'none' };
+let truncated = false;
+const latest = makeLatest();       // çizim sırası
+const lookups = makeLatest();      // sorgu sırası (dil değişimi sorguyu iptal etmez)
 
 async function getJson(url) {
   const res = await fetch(url, { credentials: 'omit', referrerPolicy: 'no-referrer' });
@@ -23,9 +29,9 @@ function loadShard(key) {
   }
   return cache.get(key);
 }
-async function countryName(iso2, fallbackMap) {
+async function countryName(iso2, fallbackMap, tag) {
   try {
-    const n = new Intl.DisplayNames(['tr'], { type: 'region' }).of(iso2);
+    const n = new Intl.DisplayNames([tag], { type: 'region' }).of(iso2);
     if (n && n !== iso2) return n;
   } catch { /* eski tarayıcı */ }
   return fallbackMap[iso2] || iso2;
@@ -38,7 +44,8 @@ function el(tag, cls, text) {
   return e;
 }
 function show(node) { out.replaceChildren(...(node ? [node] : [])); }
-function message(text) { const c = el('p', 'card empty', text); show(c); }
+// Veri değerleri (banka, marka...) çevrilmez; bdi yönü çevresinden yalıtır.
+function val(text) { const d = el('dd'); d.append(el('bdi', null, text)); return d; }
 
 function titleCase(s) {
   return s.toLowerCase().replace(/(^|[\s(\-/])(\p{L})/gu, (_, a, b) => a + b.toUpperCase());
@@ -48,45 +55,92 @@ async function render(r, token) {
   if (!countryNames) countryNames = await getJson('data/countries.json').catch(() => ({}));
   if (!token.current()) return;
   const card = el('div', 'card');
-  const name = r.iso2 ? await countryName(r.iso2, countryNames) : 'Bilinmiyor';
+  const name = r.iso2 ? await countryName(r.iso2, countryNames, LANG_TAGS[lang]) : t(lang, 'unknown');
   if (!token.current()) return;
   const h = el('h2', 'country');
   const flag = el('span', 'flag', flagEmoji(r.iso2));
   flag.setAttribute('aria-hidden', 'true');
-  h.append(flag, el('span', null, name));
+  const nm = el('span'); nm.append(el('bdi', null, name));
+  h.append(flag, nm);
   card.append(h);
   const dl = el('dl');
   const rows = [
-    ['Banka', r.issuer && titleCase(r.issuer)],
-    ['Tür', typeLabel(r.type, r.category)],
-    ['Marka', r.brand && titleCase(r.brand)],
-    ['Kategori', r.category && titleCase(r.category)],
-    ['Eşleşen BIN', r.bin],
+    [t(lang, 'rowBank'), r.issuer && titleCase(r.issuer)],
+    [t(lang, 'rowType'), typeLabel(lang, r.type, r.category)],
+    [t(lang, 'rowBrand'), r.brand && titleCase(r.brand)],
+    [t(lang, 'rowCategory'), r.category && titleCase(r.category)],
+    [t(lang, 'rowBin'), r.bin],
   ];
-  for (const [k, v] of rows) if (v) dl.append(el('dt', null, k), el('dd', null, v));
+  for (const [k, v] of rows) if (v) dl.append(el('dt', null, k), val(v));
   card.append(dl);
   if (!token.current()) return;
   show(card);
 }
 
-async function update() {
-  const { digits, truncated } = normalize(q.value);
-  if (q.value !== digits) q.value = digits;
+const MSG = { searching: 'searching', notfound: 'notFound', error: 'loadError' };
+// Mevcut duruma göre sonucu ve uyarıyı seçili dilde çizer.
+async function paint() {
   notice.hidden = !truncated;
-  notice.textContent = truncated ? 'Yalnızca ilk 6-8 hane gerekir. Fazla haneler silindi.' : '';
+  notice.textContent = truncated ? t(lang, 'truncated') : '';
+  out.setAttribute('aria-label', t(lang, 'resultLabel'));
   const token = latest.start();
-  if (digits.length < MIN_LEN) { show(null); return; }
-  message('Aranıyor…');
+  if (state.kind === 'none') show(null);
+  else if (state.kind === 'record') await render(state.r, token);
+  else show(el('p', 'card empty', t(lang, MSG[state.kind])));
+}
+
+function applyLang(next, updateUrl) {
+  lang = next;
+  const root = document.documentElement;
+  root.lang = LANG_TAGS[lang];
+  root.dir = dirOf(lang);
+  for (const n of document.querySelectorAll('[data-i18n]')) n.textContent = t(lang, n.dataset.i18n);
+  for (const n of document.querySelectorAll('[data-i18n-placeholder]')) n.placeholder = t(lang, n.dataset.i18nPlaceholder);
+  document.title = t(lang, 'title');
+  document.querySelector('meta[name="description"]').content = t(lang, 'metaDesc');
+  document.getElementById('f').setAttribute('aria-label', t(lang, 'h1'));
+  picker.value = lang;
+  if (updateUrl) {
+    try {
+      const u = new URL(location.href);
+      u.searchParams.set('lang', lang);
+      history.replaceState(null, '', u);
+    } catch { /* yoksay */ }
+  }
+  return paint();
+}
+
+async function update() {
+  const norm = normalize(q.value);
+  const { digits } = norm;
+  truncated = norm.truncated;
+  if (q.value !== digits) q.value = digits;
+  const mine = lookups.start();
+  if (digits.length < MIN_LEN) { state = { kind: 'none' }; return paint(); }
+  state = { kind: 'searching' };
+  await paint();
   try {
     const shard = await loadShard(shardKey(digits));
-    if (!token.current()) return;
+    if (!mine.current()) return;
     const r = lookup(shard, digits);
-    if (r) await render(r, token);
-    else message('Bu BIN için kayıt bulunamadı.');
+    state = r ? { kind: 'record', r } : { kind: 'notfound' };
   } catch {
-    if (token.current()) message('Veri yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.');
+    if (!mine.current()) return;
+    state = { kind: 'error' };
   }
+  await paint();
 }
+
+const picker = document.getElementById('lang');
+for (const code of SUPPORTED) {
+  const o = el('option', null, LANG_NAMES[code]);
+  o.value = code;
+  o.lang = LANG_TAGS[code];
+  picker.append(o);
+}
+document.getElementById('langbox').hidden = false;
+picker.addEventListener('change', () => applyLang(picker.value, true));
+applyLang(detectLang(navigator.languages || [navigator.language], location.search), false);
 
 q.addEventListener('input', update);
 q.addEventListener('paste', (e) => {

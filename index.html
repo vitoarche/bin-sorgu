@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,17 +11,23 @@
 </head>
 <body>
 <main>
-  <h1>BIN Sorgu</h1>
-  <p class="lead">Kartın ilk 6-8 hanesinden ülke, banka, tür ve markayı öğrenin.</p>
+  <!-- JS kapalıyken seçici gizli kalır; statik metin Türkçedir. -->
+  <div class="lang" id="langbox" hidden>
+    <label for="lang" data-i18n="langLabel">Dil</label>
+    <select id="lang"></select>
+  </div>
 
-  <p class="warn" role="note"><strong>Tam kart numarası, son kullanma tarihi veya CVV girmeyin.</strong> Yalnızca ilk 6-8 hane gerekir.</p>
+  <h1 data-i18n="h1">BIN Sorgu</h1>
+  <p class="lead" data-i18n="lead">Kartın ilk 6-8 hanesinden ülke, banka, tür ve markayı öğrenin.</p>
+
+  <p class="warn" role="note"><strong data-i18n="warnStrong">Tam kart numarası, son kullanma tarihi veya CVV girmeyin.</strong> <span data-i18n="warnRest">Yalnızca ilk 6-8 hane gerekir.</span></p>
 
   <form id="f" autocomplete="off" novalidate>
-    <label for="q">Kartın ilk 6-8 hanesi</label>
-    <input id="q" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8"
+    <label for="q" data-i18n="label">Kartın ilk 6-8 hanesi</label>
+    <input id="q" type="text" dir="ltr" inputmode="numeric" pattern="[0-9]*" maxlength="8"
            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-           placeholder="örn. 411111" aria-describedby="hint notice">
-    <p id="hint" class="hint">Yalnızca rakam; en fazla 8 hane.</p>
+           placeholder="örn. 411111" data-i18n-placeholder="placeholder" aria-describedby="hint notice">
+    <p id="hint" class="hint" data-i18n="hint">Yalnızca rakam; en fazla 8 hane.</p>
     <p id="notice" class="notice" role="alert" hidden></p>
   </form>
 
@@ -29,8 +35,8 @@
 </main>
 
 <footer>
-  <p>Veri: <a href="https://github.com/venelinkochev/bin-list-data" rel="noopener noreferrer">venelinkochev/bin-list-data</a>, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer">CC-BY-4.0</a>. Resmi IIN kaydı değildir, hata olabilir.</p>
-  <p>Girdiğiniz rakamlar kaydedilmez ve üçüncü tarafa gönderilmez. Yalnızca ilk 3 hane, veri dosyasını almak için bu siteyi sunan sunucuya gider.</p>
+  <p><span data-i18n="footerData">Veri:</span> <a href="https://github.com/venelinkochev/bin-list-data" rel="noopener noreferrer" dir="ltr">venelinkochev/bin-list-data</a>, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer" dir="ltr">CC-BY-4.0</a>. <span data-i18n="footerDisclaimer">Resmi IIN kaydı değildir, hata olabilir.</span></p>
+  <p data-i18n="privacy">Girdiğiniz rakamlar kaydedilmez ve üçüncü tarafa gönderilmez. Yalnızca ilk 3 hane, veri dosyasını almak için bu siteyi sunan sunucuya gider.</p>
 </footer>
 <div class="author" aria-hidden="true">author : arche</div>
 <script type="module" src="js/app.js"></script>
