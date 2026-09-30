@@ -1,11 +1,12 @@
 import { normalize, shardKey, lookup, flagEmoji, typeLabel, MIN_LEN } from './match.js';
+import { makeLatest } from './guard.js';
 
 const q = document.getElementById('q');
 const notice = document.getElementById('notice');
 const out = document.getElementById('result');
 const cache = new Map(); // yalnızca bellekte; diske yazılmaz
 let countryNames = null;
-let seq = 0;
+const latest = makeLatest();
 
 async function getJson(url) {
   const res = await fetch(url, { credentials: 'omit', referrerPolicy: 'no-referrer' });
@@ -43,10 +44,12 @@ function titleCase(s) {
   return s.toLowerCase().replace(/(^|[\s(\-/])(\p{L})/gu, (_, a, b) => a + b.toUpperCase());
 }
 
-async function render(r) {
+async function render(r, token) {
   if (!countryNames) countryNames = await getJson('data/countries.json').catch(() => ({}));
+  if (!token.current()) return;
   const card = el('div', 'card');
   const name = r.iso2 ? await countryName(r.iso2, countryNames) : 'Bilinmiyor';
+  if (!token.current()) return;
   const h = el('h2', 'country');
   const flag = el('span', 'flag', flagEmoji(r.iso2));
   flag.setAttribute('aria-hidden', 'true');
@@ -62,6 +65,7 @@ async function render(r) {
   ];
   for (const [k, v] of rows) if (v) dl.append(el('dt', null, k), el('dd', null, v));
   card.append(dl);
+  if (!token.current()) return;
   show(card);
 }
 
@@ -70,17 +74,17 @@ async function update() {
   if (q.value !== digits) q.value = digits;
   notice.hidden = !truncated;
   notice.textContent = truncated ? 'Yalnızca ilk 6-8 hane gerekir. Fazla haneler silindi.' : '';
-  const my = ++seq;
+  const token = latest.start();
   if (digits.length < MIN_LEN) { show(null); return; }
   message('Aranıyor…');
   try {
     const shard = await loadShard(shardKey(digits));
-    if (my !== seq) return;
+    if (!token.current()) return;
     const r = lookup(shard, digits);
-    if (r) await render(r);
+    if (r) await render(r, token);
     else message('Bu BIN için kayıt bulunamadı.');
   } catch {
-    if (my === seq) message('Veri yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.');
+    if (token.current()) message('Veri yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.');
   }
 }
 
@@ -90,7 +94,10 @@ q.addEventListener('paste', (e) => {
   const text = e.clipboardData?.getData('text');
   if (text == null) return;
   e.preventDefault();
-  q.value = text;
+  // Seçime/imlece göre birleştir; update() normalize edip 8 haneye kırpar.
+  const s = q.selectionStart ?? q.value.length;
+  const en = q.selectionEnd ?? s;
+  q.value = q.value.slice(0, s) + text + q.value.slice(en);
   update();
 });
 document.getElementById('f').addEventListener('submit', (e) => e.preventDefault());
