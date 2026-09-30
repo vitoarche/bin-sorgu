@@ -1,6 +1,8 @@
-# BIN Sorgu
+# BIN Query
 
-Kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı gösteren sunucusuz, statik site. Vanilla HTML/CSS/JS; arayüz 7 dilde (tr, en, de, fr, ar, zh, ko; çeviriler `js/i18n.js`). Dil tarayıcı dilinden seçilir (yedek: İngilizce), `?lang=xx` ile veya sayfadaki seçiciyle değiştirilir; seçim hiçbir yerde saklanmaz.
+<img src="assets/logo.svg" width="72" height="72" alt="BIN Query logosu">
+
+**BIN Query**, kartın ilk 6-8 hanesinden (BIN) ülke, banka, kart türü ve markayı gösteren sunucusuz, statik bir sitedir. Marka adı tüm dillerde aynı kalır. Vanilla HTML/CSS/JS; arayüz 7 dilde (tr, en, de, fr, ar, zh, ko; çeviriler `js/i18n.js`). Dil tarayıcı dilinden seçilir (yedek: İngilizce), `?lang=xx` ile veya sayfadaki seçiciyle değiştirilir; seçim hiçbir yerde saklanmaz.
 
 ## Veri doğrulaması (bin-list-data.csv, indirilen dosya 27.607.253 bayt)
 
@@ -21,6 +23,16 @@ Shard'lar BIN'in ilk 3 hanesine göre bölünür (`data/411.json` vb.; 770 dosya
 ## Gizlilik
 
 Giriş en fazla 8 haneye kırpılır; 9+ hane yapıştırılırsa uyarı gösterilir. localStorage, çerez, analitik veya üçüncü taraf isteği yoktur; yalnızca aynı kaynaktaki `data/*.json` dosyaları çekilir. Not: girdiğiniz rakamlar kaydedilmez ve üçüncü tarafa gönderilmez, ancak ilk 3 hane (`data/XXX.json` isteği) siteyi sunan sunucuya gider ve o sunucunun erişim loguna düşebilir. Eşleştirme tarayıcıda yapılır; 4-8. haneler hiçbir yere gitmez.
+
+## Marka
+
+Logo işareti bir mercek: içinde üç sıra nokta bir küre silüeti çizer, ortadaki 6 vurgulu nokta BIN'in ilk 6 hanesidir; merceğin sapı manyetik şeritli küçük bir karttır. Hepsi elle yazılmış SVG'dir, dış kaynak yoktur.
+
+- `assets/logo.svg`: logo ve SVG favicon (başlıktaki kopya `index.html` içinde satır içidir).
+- `assets/apple-touch-icon.png`: 180×180, köşesiz (iOS kendisi yuvarlar).
+- `assets/og.png`: 1200×630 sosyal paylaşım görseli.
+
+Yazı tipleri sistem yazı tipleridir. Giriş animasyonu ve hover efekti `prefers-reduced-motion: reduce` altında kapanır.
 
 ## Atıf
 
