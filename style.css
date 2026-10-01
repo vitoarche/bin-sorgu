@@ -36,10 +36,6 @@ input:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline
 dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; }
 dt { color: var(--muted); }
 dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
-.author {
-  position: fixed; right: .6rem; bottom: .4rem; font-size: .7rem; line-height: 1;
-  color: var(--fg); opacity: .4; pointer-events: none; user-select: none;
-}
 footer { padding: 1rem 1rem 2.25rem; font-size: .75rem; color: var(--muted); text-align: center; }
 footer p { margin: .2rem 0; }
 a { color: var(--accent); }
