@@ -76,14 +76,8 @@ a { color: var(--accent); }
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
 }
-.sig {
-  margin: .25rem 0 0; font: 500 .75rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  letter-spacing: .24em; color: var(--muted);
-}
-.sig::before {
-  content: ""; display: inline-block; width: .9rem; height: 1px; margin-inline-end: .45rem;
-  vertical-align: middle; background: currentColor;
-}
+.sig { margin: .3rem 0 0; height: 15px; line-height: 0; color: var(--muted); }
+.sig svg { display: block; height: 100%; width: auto; }
 .mark .tail { transform: translate(45.2px, 45.2px) rotate(45deg); }
 .mark .bin circle { transform-box: fill-box; transform-origin: center; }
 @media (prefers-reduced-motion: no-preference) {
